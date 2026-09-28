@@ -8,6 +8,7 @@ answer came from offline recall.
 """
 
 import logging
+import threading
 import time
 from datetime import datetime
 
@@ -45,15 +46,19 @@ class MemoryUnavailable(Exception):
 class Memory:
     def __init__(self):
         self.bank = HINDSIGHT_BANK
-        self._client = None
+        self._local = threading.local()
         self._down_until = 0.0
         self.last_error = None
 
     @property
     def client(self):
-        if self._client is None:
-            self._client = Hindsight(base_url=HINDSIGHT_URL, api_key=HINDSIGHT_API_KEY, timeout=180.0, max_attempts=2)
-        return self._client
+        # The client runs its own event loop, so it cannot be shared across threads.
+        # Recall lanes run in parallel threads, so each thread gets its own client.
+        c = getattr(self._local, "client", None)
+        if c is None:
+            c = self._local.client = Hindsight(base_url=HINDSIGHT_URL, api_key=HINDSIGHT_API_KEY,
+                                               timeout=180.0, max_attempts=2)
+        return c
 
     def _call(self, fn, *args, **kwargs):
         # After a failure, skip Hindsight for 20s instead of making every request wait for a timeout.
