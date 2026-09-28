@@ -118,24 +118,30 @@ async function route() {
 function renderHome() {
   const d = state.docket;
   const stats = state.health?.hindsight?.stats;
-  const tomorrow = d.upcoming.filter((c) => relDay(c.next_date) === "Tomorrow").length;
+  const tomorrow = d.upcoming.filter((c) => relDay(c.next_date) === "Tomorrow");
   main.innerHTML = `
-    <section class="home-hero">
-      <h1>${tomorrow} matters tomorrow.<br><em>Your diary remembers all of them.</em></h1>
-      <p>Every hearing you have logged, every direction from the bench, every adjournment and the reason given, and every promise to a client is kept in long-term memory. Ask for a brief and it is prepared from that record, with the source hearing cited.</p>
+    <section class="home-head">
+      <div>
+        <div class="eyebrow">Cause list · ${esc(fmtDate(d.upcoming[0]?.next_date, { weekday: "long", day: "numeric", month: "long" }))}</div>
+        <h1>${tomorrow.length} matters tomorrow, ${d.upcoming.length - tomorrow.length} more this week</h1>
+        <p>Open a matter for a brief built from every hearing you've logged. Each line cites the hearing it came from.</p>
+      </div>
+      <button class="btn primary" onclick="openPalette()"><i data-lucide="search"></i>Ask the diary</button>
     </section>
     <div class="kpis">
-      <div><b>${d.totals.cases}</b><span>active and recent matters</span></div>
-      <div><b>${d.totals.hearings}</b><span>hearings in the diary</span></div>
-      <div><b>${stats ? stats.world + stats.experience : "—"}</b><span>facts in Hindsight memory</span></div>
-      <div><b>${stats ? stats.observation : "—"}</b><span>patterns learned across cases</span></div>
+      <div><b>${d.totals.cases}</b><span>matters on the diary</span></div>
+      <div><b>${d.totals.hearings}</b><span>hearings recorded</span></div>
+      <div class="mem"><b>${stats ? (stats.world + stats.experience).toLocaleString("en-IN") : "—"}</b><span>facts held in Hindsight</span></div>
+      <div class="mem"><b>${stats ? stats.observation : "—"}</b><span>patterns learned across cases</span></div>
     </div>
-    <div class="section"><h3><i data-lucide="calendar-days"></i> Cause list · next seven days</h3>
-      ${d.upcoming.map((c) => `
+    <div class="cause-list">
+      <div class="cause-head"><span>Next seven days</span><span class="mono">${d.upcoming.length} listed</span></div>
+      ${d.upcoming.map((c, i) => `
         <a class="cause" href="#/case/${c.id}/brief">
+          <div class="sr">${String(i + 1).padStart(2, "0")}</div>
           <div class="cd ${relDay(c.next_date) === "Tomorrow" ? "tm" : ""}">${esc(relDay(c.next_date))}</div>
           <div><div class="ct">${esc(c.title)}</div><div class="cs">${esc(c.case_no)} · ${esc(c.court_name)}</div></div>
-          <div class="go">${esc(c.next_purpose || "")} <i data-lucide="arrow-right"></i></div>
+          <div class="go">${esc(c.next_purpose || "")} <i data-lucide="chevron-right"></i></div>
         </a>`).join("")}
     </div>`;
   icons();
@@ -299,7 +305,7 @@ function briefBody(b, caseId) {
         return `<li class="${done ? "done" : ""}">${checkable ? `<input type="checkbox" class="check" data-k="${k}" ${done ? "checked" : ""}>` : ""}<span class="txt">${esc(it.text)}${cites(it.cites, f, caseId)}</span></li>`;
       }).join("")}</ul></div>` : "");
 
-  return `
+  return `<div class="sheet">
     <h2 class="headline">${esc(r.headline)}</h2>
     <p class="standing">${esc(r.standing)}</p>
     ${b.mode === "memory" ? patternCard(b.pattern, f, caseId) : ""}
@@ -308,13 +314,14 @@ function briefBody(b, caseId) {
     ${(r.watch_outs || []).length ? `<div class="section"><h3><i data-lucide="eye"></i>Watch out</h3>
       ${r.watch_outs.map((w) => `<div class="watch"><div class="wt"><i data-lucide="triangle-alert"></i>${esc(w.title)}</div>${esc(w.text)}${cites(w.cites, f, caseId)}</div>`).join("")}</div>` : ""}
     ${r.preempt?.say ? `<div class="section"><h3><i data-lucide="message-square-quote"></i>Be ready to say</h3>
-      <div class="script"><div class="trig">${esc(r.preempt.trigger)}</div><blockquote>“${esc(r.preempt.say)}”</blockquote>${cites(r.preempt.cites, f, caseId)}</div></div>` : ""}
+      <div class="script"><div class="trig">${esc(r.preempt.trigger)}</div><blockquote><mark>${esc(r.preempt.say)}</mark></blockquote>${cites(r.preempt.cites, f, caseId)}</div></div>` : ""}
     ${(r.changed || []).length ? `<div class="section"><h3><i data-lucide="git-compare"></i>Changed since it was first recorded</h3>
       ${r.changed.map((c) => `<div class="change"><div class="what">${esc(c.what)} ${cites(c.cites, f, caseId)}</div><div class="before">${esc(c.before)}</div><i data-lucide="arrow-right"></i><div class="after">${esc(c.after)}</div></div>`).join("")}</div>` : ""}
     ${list(r.promises, "promise", "handshake", "Promised to the client", true)}
     ${list(r.carry, "carry", "briefcase", "Carry to court", true)}
     ${(r.gaps || []).length ? `<div class="section"><h3><i data-lucide="circle-help"></i>Not in the record</h3><p class="gaps">${r.gaps.map(esc).join(" · ")}</p></div>` : ""}
-    ${b.model ? `<p class="mono muted" style="margin-top:30px">${b.mode === "memory" ? `${f.length} memories · ` : ""}${esc(b.model)}</p>` : ""}`;
+    <div class="byline">${b.mode === "memory" ? `<span>${f.length} memories recalled</span><span>${b.memory_source === "offline" ? "local diary" : "Hindsight"}</span>` : "<span>no memory</span>"}${b.model ? `<span>${esc(b.model)}</span>` : ""}</div>
+  </div>`;
 }
 
 function rail(b, caseId) {
@@ -378,7 +385,9 @@ function renderHearings(data, filter = "all") {
       .map(([k, l]) => `<button class="lane ${k === filter ? "active" : ""}" data-f="${k}">${l}</button>`).join("")}</div>
     <div class="timeline">${hs.map((h) => `
       <div class="hearing ${h.adjournment ? "adj" : ""} ${h.logged ? "logged" : ""}">
-        <div class="hh"><span class="no">H${h.no}</span><span class="hd">${fmtDate(h.date, { day: "numeric", month: "long", year: "numeric" })}</span><span class="stage">${esc(h.stage)} · ${esc(h.judge_name || "")}</span></div>
+        <div class="date-col"><b>${fmtDate(h.date, { day: "2-digit" })}</b>${fmtDate(h.date, { month: "short", year: "numeric" })}</div>
+        <div>
+        <div class="hh"><span class="no">H${h.no}</span><span class="stage">${esc(h.stage)}</span><span class="bench">${esc(h.judge_name || "")}</span></div>
         <p>${esc(h.notes)}</p>
         <div class="chips">
           ${h.adjournment ? `<span class="chip adj"><i data-lucide="pause"></i>${adjLabel(h.adjournment)}: ${esc(h.adjournment.ground)}</span>` : ""}
@@ -386,6 +395,7 @@ function renderHearings(data, filter = "all") {
           ${h.due.map((x) => `<span class="chip"><i data-lucide="file-clock"></i>${esc(x.item)} · ${esc(x.by)} · ${esc(x.status)}</span>`).join("")}
           ${h.promises.map((p) => `<span class="chip promise"><i data-lucide="handshake"></i>${esc(p)}</span>`).join("")}
           ${h.lesson ? `<span class="chip"><i data-lucide="lightbulb"></i>${esc(h.lesson)}</span>` : ""}
+        </div>
         </div>
       </div>`).join("") || `<p class="muted">Nothing matches this filter.</p>`}</div>`;
   icons();
@@ -502,14 +512,15 @@ async function showProfile(kind, id) {
 function renderAll() {
   const cs = state.docket.cases;
   main.innerHTML = `<h1 class="page">All matters</h1><p class="lede">${cs.length} matters across ${new Set(cs.map((c) => c.court)).size} courts.</p>
-    <table class="matters"><thead><tr><th>Matter</th><th>Type</th><th>Court</th><th>Next date</th></tr></thead><tbody>
+    <div class="table-wrap"><table class="matters"><thead><tr><th>Matter</th><th>Type</th><th>Court</th><th>Next date</th></tr></thead><tbody>
     ${cs.map((c) => `<tr data-id="${c.id}"><td><b style="font-weight:500">${esc(c.title)}</b><div class="mono muted">${esc(c.case_no)}</div></td><td>${esc(c.type)}</td><td class="muted">${esc(c.court_name)}</td><td class="mono">${c.next_date ? fmtDate(c.next_date) : "Disposed"}</td></tr>`).join("")}
-    </tbody></table>`;
+    </tbody></table></div>`;
   main.querySelectorAll("tr[data-id]").forEach((tr) => (tr.onclick = () => (location.hash = `#/case/${tr.dataset.id}/brief`)));
 }
 
 /* ---------------------------------------------------------------- palette */
 
+window.openPalette = openPalette;
 function openPalette() {
   $("#palette").hidden = false;
   $("#palette-answer").innerHTML = "";
