@@ -8,7 +8,8 @@ working when both are down.
 import os
 
 os.environ["HINDSIGHT_URL"] = "http://127.0.0.1:9"  # nothing listens here: forces the offline path
-os.environ["LLM_API_KEY"] = ""
+for _k in ("LLM_API_KEY", "LLM_API_KEY_2", "LLM_API_KEY_3", "GROQ_API_KEY"):
+    os.environ[_k] = ""
 
 from fastapi.testclient import TestClient  # noqa: E402
 
