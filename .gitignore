@@ -47,3 +47,4 @@ Thumbs.db
 # Runtime state (anchor date, hearings logged during demos, seed progress)
 data/runtime/
 node_modules/
+.playwright-mcp/

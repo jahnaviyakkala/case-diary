@@ -338,3 +338,5 @@ table.matters { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   .cause .go { display: none; }
   .depth { margin-left: 0; }
 }
+
+[hidden] { display: none !important; }
