@@ -1,0 +1,367 @@
+[
+  {
+    "case": {
+      "case_id": "nair-vs-state",
+      "title": "Nair vs. State",
+      "case_number": "CC/1102/2024",
+      "court_name": "Court of the Metropolitan Magistrate, East Zone",
+      "case_type": "Criminal Misappropriation",
+      "status": "Ongoing",
+      "filed_date": "2024-02-10",
+      "next_hearing_date": "2025-11-20",
+      "summary": "Fictional criminal case alleging unauthorized transfer of corporate funds.",
+      "synthetic": true
+    },
+    "parties": [
+      {"party_id": "PART-NAIR-01", "name": "P. Nair", "kind": "individual"},
+      {"party_id": "PART-NAIR-02", "name": "State of Demo", "kind": "state"}
+    ],
+    "case_parties": [
+      {"case_id": "nair-vs-state", "party_id": "PART-NAIR-01", "role": "accused"},
+      {"case_id": "nair-vs-state", "party_id": "PART-NAIR-02", "role": "state"}
+    ],
+    "advocates": [
+      {"advocate_id": "ADV-NAIR-01", "name": "Advocate R. Menon"},
+      {"advocate_id": "ADV-NAIR-02", "name": "Public Prosecutor B. Das"}
+    ],
+    "case_advocates": [
+      {"case_id": "nair-vs-state", "advocate_id": "ADV-NAIR-01", "side": "defence", "is_our_client_side": false},
+      {"case_id": "nair-vs-state", "advocate_id": "ADV-NAIR-02", "side": "prosecution", "is_our_client_side": false}
+    ],
+    "judges": [
+      {"judge_id": "JUDGE-NAIR-01", "name": "Hon'ble Magistrate C. P. Iyer", "designation": "Metropolitan Magistrate"}
+    ],
+    "hearings": [
+      {
+        "hearing_id": "NAIR-H01",
+        "case_id": "nair-vs-state",
+        "hearing_no": 1,
+        "hearing_date": "2024-03-01",
+        "court_name": "Court of the Metropolitan Magistrate, East Zone",
+        "judge_id": "JUDGE-NAIR-01",
+        "status": "completed",
+        "purpose": "Appearance and Bail",
+        "summary": "Accused appeared and bail was granted upon furnishing bond.",
+        "next_hearing_date": "2024-05-15"
+      },
+      {
+        "hearing_id": "NAIR-H02",
+        "case_id": "nair-vs-state",
+        "hearing_no": 2,
+        "hearing_date": "2024-05-15",
+        "court_name": "Court of the Metropolitan Magistrate, East Zone",
+        "judge_id": "JUDGE-NAIR-01",
+        "status": "completed",
+        "purpose": "Submission of Electronic Records",
+        "summary": "Prosecution tendered email printouts without required electronic certificate.",
+        "next_hearing_date": "2024-08-10"
+      },
+      {
+        "hearing_id": "NAIR-H03",
+        "case_id": "nair-vs-state",
+        "hearing_no": 3,
+        "hearing_date": "2024-08-10",
+        "court_name": "Court of the Metropolitan Magistrate, East Zone",
+        "judge_id": "JUDGE-NAIR-01",
+        "status": "completed",
+        "purpose": "Objection to Electronic Evidence",
+        "summary": "Defence filed certificate for electronic records with a supporting affidavit.",
+        "next_hearing_date": "2024-11-05"
+      },
+      {
+        "hearing_id": "NAIR-H04",
+        "case_id": "nair-vs-state",
+        "hearing_no": 4,
+        "hearing_date": "2024-11-05",
+        "court_name": "Court of the Metropolitan Magistrate, East Zone",
+        "judge_id": "JUDGE-NAIR-01",
+        "status": "completed",
+        "purpose": "Order on Admissibility",
+        "summary": "Court considered defence affidavit and permitted electronic record to be marked in evidence.",
+        "next_hearing_date": null
+      }
+    ],
+    "arguments": [
+      {
+        "argument_id": "NAIR-H03-A01",
+        "hearing_id": "NAIR-H03",
+        "side": "defence",
+        "text": "Defence submitted the electronic evidence certificate accompanied by a supporting affidavit from the system custodian.",
+        "issue_tags": ["electronic-evidence-certificate"]
+      }
+    ],
+    "court_directions": [
+      {
+        "direction_id": "NAIR-H02-D01",
+        "hearing_id": "NAIR-H02",
+        "text": "Directed party submitting electronic logs to file statutory electronic evidence certificate.",
+        "issue_tags": ["electronic-evidence-certificate"]
+      }
+    ],
+    "adjournments": [
+      {
+        "adjournment_id": "NAIR-H02-ADJ01",
+        "hearing_id": "NAIR-H02",
+        "reason": "Prosecution sought time to verify digital hashes",
+        "requested_by": "prosecution"
+      }
+    ],
+    "documents": [
+      {
+        "document_id": "NAIR-H03-DOC01",
+        "hearing_id": "NAIR-H03",
+        "name": "Electronic Evidence Certificate & Supporting Affidavit",
+        "status_kind": "submitted",
+        "requested_by_submitted_by": "defence",
+        "status": "submitted",
+        "resolved_hearing_id": "NAIR-H04"
+      }
+    ],
+    "action_items": [],
+    "outcomes": [
+      {
+        "outcome_id": "NAIR-H04-OUT01",
+        "hearing_id": "NAIR-H04",
+        "text": "Court permitted the electronic record to be marked after examining supporting affidavit."
+      }
+    ]
+  },
+  {
+    "case": {
+      "case_id": "khan-vs-union",
+      "title": "Khan vs. Union Territory",
+      "case_number": "CC/8821/2023",
+      "court_name": "Court of Chief Judicial Magistrate, Central Division",
+      "case_type": "Regulatory Offence",
+      "status": "Ongoing",
+      "filed_date": "2023-11-12",
+      "next_hearing_date": "2025-12-01",
+      "summary": "Fictional trial regarding alleged non-compliance with municipal licensing norms.",
+      "synthetic": true
+    },
+    "parties": [
+      {"party_id": "PART-KHAN-01", "name": "A. Khan", "kind": "individual"},
+      {"party_id": "PART-KHAN-02", "name": "Union Territory Administration", "kind": "state"}
+    ],
+    "case_parties": [
+      {"case_id": "khan-vs-union", "party_id": "PART-KHAN-01", "role": "accused"},
+      {"case_id": "khan-vs-union", "party_id": "PART-KHAN-02", "role": "state"}
+    ],
+    "advocates": [
+      {"advocate_id": "ADV-KHAN-01", "name": "Advocate S. Qureshi"},
+      {"advocate_id": "ADV-KHAN-02", "name": "Standing Counsel K. Ahmed"}
+    ],
+    "case_advocates": [
+      {"case_id": "khan-vs-union", "advocate_id": "ADV-KHAN-01", "side": "defence", "is_our_client_side": false},
+      {"case_id": "khan-vs-union", "advocate_id": "ADV-KHAN-02", "side": "prosecution", "is_our_client_side": false}
+    ],
+    "judges": [
+      {"judge_id": "JUDGE-KHAN-01", "name": "Hon'ble Magistrate D. L. Deshmukh", "designation": "Chief Judicial Magistrate"}
+    ],
+    "hearings": [
+      {
+        "hearing_id": "KHAN-H01",
+        "case_id": "khan-vs-union",
+        "hearing_no": 1,
+        "hearing_date": "2024-01-10",
+        "court_name": "Court of Chief Judicial Magistrate, Central Division",
+        "judge_id": "JUDGE-KHAN-01",
+        "status": "completed",
+        "purpose": "Summons Return",
+        "summary": "Summons served; accused appeared through counsel.",
+        "next_hearing_date": "2024-04-12"
+      },
+      {
+        "hearing_id": "KHAN-H02",
+        "case_id": "khan-vs-union",
+        "hearing_no": 2,
+        "hearing_date": "2024-04-12",
+        "court_name": "Court of Chief Judicial Magistrate, Central Division",
+        "judge_id": "JUDGE-KHAN-01",
+        "status": "completed",
+        "purpose": "Prosecution Evidence (CW-1)",
+        "summary": "Complainant witness absent; trial adjourned.",
+        "next_hearing_date": "2024-07-15"
+      },
+      {
+        "hearing_id": "KHAN-H03",
+        "case_id": "khan-vs-union",
+        "hearing_no": 3,
+        "hearing_date": "2024-07-15",
+        "court_name": "Court of Chief Judicial Magistrate, Central Division",
+        "judge_id": "JUDGE-KHAN-01",
+        "status": "completed",
+        "purpose": "Prosecution Evidence (CW-1)",
+        "summary": "Complainant witness absent again despite notice.",
+        "next_hearing_date": "2024-10-20"
+      },
+      {
+        "hearing_id": "KHAN-H04",
+        "case_id": "khan-vs-union",
+        "hearing_no": 4,
+        "hearing_date": "2024-10-20",
+        "court_name": "Court of Chief Judicial Magistrate, Central Division",
+        "judge_id": "JUDGE-KHAN-01",
+        "status": "completed",
+        "purpose": "Directions for Arguments",
+        "summary": "Court directed both sides to submit concise written submissions before next date.",
+        "next_hearing_date": null
+      }
+    ],
+    "arguments": [
+      {
+        "argument_id": "KHAN-H02-A01",
+        "hearing_id": "KHAN-H02",
+        "side": "defence",
+        "text": "Defence highlighted repeated witness absence causing harassment to accused.",
+        "issue_tags": ["witness-absence-adjournment"]
+      },
+      {
+        "argument_id": "KHAN-H03-A01",
+        "hearing_id": "KHAN-H03",
+        "side": "defence",
+        "text": "Defence requested closing prosecution evidence due to witness absence.",
+        "issue_tags": ["witness-absence-adjournment"]
+      }
+    ],
+    "court_directions": [
+      {
+        "direction_id": "KHAN-H04-D01",
+        "hearing_id": "KHAN-H04",
+        "text": "Both parties directed to file concise written submissions not exceeding 5 pages.",
+        "issue_tags": ["written-arguments"]
+      }
+    ],
+    "adjournments": [
+      {
+        "adjournment_id": "KHAN-H02-ADJ01",
+        "hearing_id": "KHAN-H02",
+        "reason": "Complainant witness CW-1 absent",
+        "requested_by": "prosecution"
+      },
+      {
+        "adjournment_id": "KHAN-H03-ADJ01",
+        "hearing_id": "KHAN-H03",
+        "reason": "Complainant witness CW-1 absent again",
+        "requested_by": "prosecution"
+      }
+    ],
+    "documents": [],
+    "action_items": [],
+    "outcomes": [
+      {
+        "outcome_id": "KHAN-H04-OUT01",
+        "hearing_id": "KHAN-H04",
+        "text": "Written submissions direction issued; matter reserved for orders."
+      }
+    ]
+  },
+  {
+    "case": {
+      "case_id": "rao-vs-property-corp",
+      "title": "Rao vs. Property Development Corp",
+      "case_number": "CS/3301/2024",
+      "court_name": "Court of the Senior Civil Judge, North Division",
+      "case_type": "Civil Suit",
+      "status": "Ongoing",
+      "filed_date": "2024-03-01",
+      "next_hearing_date": "2025-10-10",
+      "summary": "Fictional civil suit seeking specific performance of a commercial lease agreement.",
+      "synthetic": true
+    },
+    "parties": [
+      {"party_id": "PART-RAO-01", "name": "M. Rao", "kind": "individual"},
+      {"party_id": "PART-RAO-02", "name": "Property Development Corp", "kind": "organization"}
+    ],
+    "case_parties": [
+      {"case_id": "rao-vs-property-corp", "party_id": "PART-RAO-01", "role": "plaintiff"},
+      {"case_id": "rao-vs-property-corp", "party_id": "PART-RAO-02", "role": "defendant"}
+    ],
+    "advocates": [
+      {"advocate_id": "ADV-RAO-01", "name": "Advocate G. N. Swamy"},
+      {"advocate_id": "ADV-RAO-02", "name": "Advocate L. N. Murthy"}
+    ],
+    "case_advocates": [
+      {"case_id": "rao-vs-property-corp", "advocate_id": "ADV-RAO-01", "side": "complainant", "is_our_client_side": false},
+      {"case_id": "rao-vs-property-corp", "advocate_id": "ADV-RAO-02", "side": "defence", "is_our_client_side": false}
+    ],
+    "judges": [
+      {"judge_id": "JUDGE-RAO-01", "name": "Hon'ble Civil Judge P. S. Bhat", "designation": "Senior Civil Judge"}
+    ],
+    "hearings": [
+      {
+        "hearing_id": "RAO-H01",
+        "case_id": "rao-vs-property-corp",
+        "hearing_no": 1,
+        "hearing_date": "2024-04-05",
+        "court_name": "Court of the Senior Civil Judge, North Division",
+        "judge_id": "JUDGE-RAO-01",
+        "status": "completed",
+        "purpose": "Plaint Admission & Notice",
+        "summary": "Plaint admitted; summons issued to defendant.",
+        "next_hearing_date": "2024-06-20"
+      },
+      {
+        "hearing_id": "RAO-H02",
+        "case_id": "rao-vs-property-corp",
+        "hearing_no": 2,
+        "hearing_date": "2024-06-20",
+        "court_name": "Court of the Senior Civil Judge, North Division",
+        "judge_id": "JUDGE-RAO-01",
+        "status": "completed",
+        "purpose": "Written Statement",
+        "summary": "Defendant filed written statement denying breach of lease terms.",
+        "next_hearing_date": "2024-09-15"
+      },
+      {
+        "hearing_id": "RAO-H03",
+        "case_id": "rao-vs-property-corp",
+        "hearing_no": 3,
+        "hearing_date": "2024-09-15",
+        "court_name": "Court of the Senior Civil Judge, North Division",
+        "judge_id": "JUDGE-RAO-01",
+        "status": "completed",
+        "purpose": "Framing of Issues",
+        "summary": "Civil issues framed regarding valid lease execution and entitlement to damages.",
+        "next_hearing_date": null
+      }
+    ],
+    "arguments": [
+      {
+        "argument_id": "RAO-H02-A01",
+        "hearing_id": "RAO-H02",
+        "side": "defence",
+        "text": "Defendant contended that plaintiff defaulted on security deposit timeline.",
+        "issue_tags": ["contract-default"]
+      }
+    ],
+    "court_directions": [
+      {
+        "direction_id": "RAO-H03-D01",
+        "hearing_id": "RAO-H03",
+        "text": "Parties directed to file list of documents and witness affidavits for trial.",
+        "issue_tags": ["trial-documents"]
+      }
+    ],
+    "adjournments": [],
+    "documents": [
+      {
+        "document_id": "RAO-H02-DOC01",
+        "hearing_id": "RAO-H02",
+        "name": "Lease Deed & Payment Receipt",
+        "status_kind": "submitted",
+        "requested_by_submitted_by": "plaintiff",
+        "status": "submitted",
+        "resolved_hearing_id": "RAO-H02"
+      }
+    ],
+    "action_items": [],
+    "outcomes": [
+      {
+        "outcome_id": "RAO-H03-OUT01",
+        "hearing_id": "RAO-H03",
+        "text": "Issues framed; posted for trial evidence."
+      }
+    ]
+  }
+]

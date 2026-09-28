@@ -1,24 +1,23 @@
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-from pydantic import BaseModel
-
-# Load environment variables from root .env if present
-env_path = Path(__file__).resolve().parent.parent / ".env"
-if env_path.exists():
-    load_dotenv(dotenv_path=env_path)
-else:
-    load_dotenv()
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseModel):
-    hindsight_base_url: str = os.getenv("HINDSIGHT_BASE_URL", "http://localhost:8888")
-    hindsight_bank_id: str = os.getenv("HINDSIGHT_BANK_ID", "case-diary-demo")
-    hindsight_api_llm_provider: str = os.getenv("HINDSIGHT_API_LLM_PROVIDER", "gemini")
-    hindsight_api_llm_api_key: str = os.getenv("HINDSIGHT_API_LLM_API_KEY", "")
-    hindsight_api_llm_model: str = os.getenv("HINDSIGHT_API_LLM_MODEL", "")
-    anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "")
-    anthropic_model: str = os.getenv("ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022")
+class Settings(BaseSettings):
+    hindsight_url: str = "http://localhost:8888"
+    hindsight_base_url: str = "http://localhost:8888"
+    hindsight_bank_id: str = "case-diary-demo"
+    hindsight_api_llm_provider: str = "gemini"
+    hindsight_api_llm_api_key: str = ""
+    hindsight_api_llm_model: str = "gemini-2.0-flash"
+    gemini_api_key: str = ""
+    anthropic_api_key: str = ""
+    anthropic_model: str = "claude-3-5-sonnet-20241022"
+    database_url: str = "sqlite:///data/case_diary.db"
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 
 settings = Settings()

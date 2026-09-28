@@ -1,9 +1,9 @@
+hindsight-client
 fastapi
 uvicorn[standard]
-pydantic
 pydantic-settings
-python-dotenv
-anthropic
-hindsight-client
 httpx
+anthropic
 pytest
+python-dotenv
+sqlmodel

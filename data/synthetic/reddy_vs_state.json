@@ -1,0 +1,461 @@
+{
+  "case": {
+    "case_id": "reddy-vs-state",
+    "title": "Reddy vs. State",
+    "case_number": "CC/4092/2024",
+    "court_name": "Court of the Additional Sessions Judge, Demo District",
+    "case_type": "Criminal Trial",
+    "status": "Ongoing",
+    "filed_date": "2024-01-05",
+    "next_hearing_date": "2026-09-29",
+    "summary": "Fictional criminal trial concerning alleged financial irregularities in a commercial property transaction.",
+    "synthetic": true
+  },
+  "parties": [
+    {"party_id": "PART-01", "name": "K. V. Reddy", "kind": "individual"},
+    {"party_id": "PART-02", "name": "State of Demo", "kind": "state"}
+  ],
+  "case_parties": [
+    {"case_id": "reddy-vs-state", "party_id": "PART-01", "role": "accused"},
+    {"case_id": "reddy-vs-state", "party_id": "PART-02", "role": "state"}
+  ],
+  "advocates": [
+    {"advocate_id": "ADV-01", "name": "Advocate V. K. Gupta"},
+    {"advocate_id": "ADV-02", "name": "Public Prosecutor S. Sharma"}
+  ],
+  "case_advocates": [
+    {"case_id": "reddy-vs-state", "advocate_id": "ADV-01", "side": "defence", "is_our_client_side": true},
+    {"case_id": "reddy-vs-state", "advocate_id": "ADV-02", "side": "prosecution", "is_our_client_side": false}
+  ],
+  "judges": [
+    {"judge_id": "JUDGE-01", "name": "Hon'ble Magistrate A. K. Sharma", "designation": "Judicial Magistrate First Class"},
+    {"judge_id": "JUDGE-02", "name": "Hon'ble Special Judge M. R. Rao", "designation": "Special Sessions Judge"},
+    {"judge_id": "JUDGE-03", "name": "Hon'ble Additional Sessions Judge S. N. Verma", "designation": "Additional Sessions Judge"}
+  ],
+  "hearings": [
+    {
+      "hearing_id": "REDDY-H01",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 1,
+      "hearing_date": "2024-01-15",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-01",
+      "status": "completed",
+      "purpose": "Cognizance and Appearance",
+      "summary": "First appearance of accused upon summons. Copies of charge sheet provided.",
+      "next_hearing_date": "2024-03-10"
+    },
+    {
+      "hearing_id": "REDDY-H02",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 2,
+      "hearing_date": "2024-03-10",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-01",
+      "status": "completed",
+      "purpose": "Framing of Charges",
+      "summary": "Charges framed under relevant provisions regarding property transaction allegations. Accused pleaded not guilty.",
+      "next_hearing_date": "2024-05-20"
+    },
+    {
+      "hearing_id": "REDDY-H03",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 3,
+      "hearing_date": "2024-05-20",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-01",
+      "status": "completed",
+      "purpose": "Prosecution Evidence - Schedule & Documents",
+      "summary": "Prosecution filed list of witnesses. Court directed production of certified bank statements.",
+      "next_hearing_date": "2024-07-12"
+    },
+    {
+      "hearing_id": "REDDY-H04",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 4,
+      "hearing_date": "2024-07-12",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-01",
+      "status": "completed",
+      "purpose": "Prosecution Evidence",
+      "summary": "Prosecution sought time to produce certified bank statements.",
+      "next_hearing_date": "2024-09-08"
+    },
+    {
+      "hearing_id": "REDDY-H05",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 5,
+      "hearing_date": "2024-09-08",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-01",
+      "status": "completed",
+      "purpose": "Witness Examination (PW-2)",
+      "summary": "PW-2 remained absent. Adjournment requested by prosecution.",
+      "next_hearing_date": "2024-11-14"
+    },
+    {
+      "hearing_id": "REDDY-H06",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 6,
+      "hearing_date": "2024-11-14",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-02",
+      "status": "completed",
+      "purpose": "Witness Examination (PW-2)",
+      "summary": "PW-2 absent again. Fresh summons issued by presiding judge.",
+      "next_hearing_date": "2025-01-20"
+    },
+    {
+      "hearing_id": "REDDY-H07",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 7,
+      "hearing_date": "2025-01-20",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-02",
+      "status": "completed",
+      "purpose": "PW-2 Examination",
+      "summary": "PW-2 examined in chief and cross-examined by defence counsel.",
+      "next_hearing_date": "2025-03-12"
+    },
+    {
+      "hearing_id": "REDDY-H08",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 8,
+      "hearing_date": "2025-03-12",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-02",
+      "status": "completed",
+      "purpose": "Electronic Evidence & Bank Records Direction",
+      "summary": "Defence objected to missing electronic evidence certificate. Court repeated direction for certified bank statement.",
+      "next_hearing_date": "2025-05-18"
+    },
+    {
+      "hearing_id": "REDDY-H09",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 9,
+      "hearing_date": "2025-05-18",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-02",
+      "status": "completed",
+      "purpose": "Prosecution Evidence",
+      "summary": "Matter adjourned due to heavy board and court time constraint.",
+      "next_hearing_date": "2025-07-22"
+    },
+    {
+      "hearing_id": "REDDY-H10",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 10,
+      "hearing_date": "2025-07-22",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-02",
+      "status": "completed",
+      "purpose": "Filing of Certificate & PW-3 Examination",
+      "summary": "Prosecution filed mandatory electronic evidence certificate. PW-3 chief examination deferred.",
+      "next_hearing_date": "2025-10-15"
+    },
+    {
+      "hearing_id": "REDDY-H11",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 11,
+      "hearing_date": "2025-10-15",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-03",
+      "status": "completed",
+      "purpose": "Partial Document Submission",
+      "summary": "Prosecution filed partial bank records for Ex. D-7; full certified copy remains pending.",
+      "next_hearing_date": "2026-01-10"
+    },
+    {
+      "hearing_id": "REDDY-H12",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 12,
+      "hearing_date": "2026-01-10",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-03",
+      "status": "completed",
+      "purpose": "PW-3 Examination in Chief",
+      "summary": "PW-3 examined in chief. Cross-examination scheduled for next date.",
+      "next_hearing_date": "2026-04-18"
+    },
+    {
+      "hearing_id": "REDDY-H13",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 13,
+      "hearing_date": "2026-04-18",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-03",
+      "status": "completed",
+      "purpose": "PW-3 Cross-Examination",
+      "summary": "Adjournment sought by defence counsel due to pre-occupation in High Court.",
+      "next_hearing_date": "2026-07-20"
+    },
+    {
+      "hearing_id": "REDDY-H14",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 14,
+      "hearing_date": "2026-07-20",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-03",
+      "status": "completed",
+      "purpose": "PW-3 Cross-Examination Continued",
+      "summary": "PW-3 cross-examination partly completed. Remaining cross deferred to next date.",
+      "next_hearing_date": "2026-09-29"
+    },
+    {
+      "hearing_id": "REDDY-H15",
+      "case_id": "reddy-vs-state",
+      "hearing_no": 15,
+      "hearing_date": "2026-09-29",
+      "court_name": "Court of the Additional Sessions Judge, Demo District",
+      "judge_id": "JUDGE-03",
+      "status": "scheduled",
+      "purpose": "Cross-examination of PW-3 and production of certified bank records",
+      "summary": "Scheduled hearing for cross-examination of PW-3.",
+      "next_hearing_date": null
+    }
+  ],
+  "arguments": [
+    {
+      "argument_id": "REDDY-H01-A01",
+      "hearing_id": "REDDY-H01",
+      "side": "defence",
+      "text": "Defence submitted that summons were received late and requested complete copies of charge documents.",
+      "issue_tags": ["procedure"]
+    },
+    {
+      "argument_id": "REDDY-H02-A01",
+      "hearing_id": "REDDY-H02",
+      "side": "defence",
+      "text": "Defence argued that the dispute is purely civil in nature arising out of a property contract.",
+      "issue_tags": ["discharge"]
+    },
+    {
+      "argument_id": "REDDY-H03-A01",
+      "hearing_id": "REDDY-H03",
+      "side": "defence",
+      "text": "Defence demanded original or certified bank statements to verify transaction entries.",
+      "issue_tags": ["certified-copy-pending"]
+    },
+    {
+      "argument_id": "REDDY-H05-A01",
+      "hearing_id": "REDDY-H05",
+      "side": "defence",
+      "text": "Defence objected to repeated non-appearance of prosecution witnesses causing trial delay.",
+      "issue_tags": ["witness-absence-adjournment"]
+    },
+    {
+      "argument_id": "REDDY-H06-A01",
+      "hearing_id": "REDDY-H06",
+      "side": "defence",
+      "text": "Defence submitted that PW-2 is intentionally avoiding court appearance.",
+      "issue_tags": ["witness-absence-adjournment"]
+    },
+    {
+      "argument_id": "REDDY-H08-A01",
+      "hearing_id": "REDDY-H08",
+      "side": "defence",
+      "text": "Defence argued that electronic call records produced by prosecution lacked the mandatory electronic evidence certificate.",
+      "issue_tags": ["electronic-evidence-certificate"]
+    },
+    {
+      "argument_id": "REDDY-H08-A02",
+      "hearing_id": "REDDY-H08",
+      "side": "prosecution",
+      "text": "Prosecution submitted that electronic records were generated from regular server logs.",
+      "issue_tags": ["electronic-evidence-certificate"]
+    },
+    {
+      "argument_id": "REDDY-H10-A01",
+      "hearing_id": "REDDY-H10",
+      "side": "prosecution",
+      "text": "Prosecution submitted electronic evidence certificate along with compliance report.",
+      "issue_tags": ["electronic-evidence-certificate"]
+    },
+    {
+      "argument_id": "REDDY-H14-A01",
+      "hearing_id": "REDDY-H14",
+      "side": "defence",
+      "text": "Defence cross-examined PW-3 on financial ledgers and highlighted discrepancies in dates.",
+      "issue_tags": ["cross-examination"]
+    }
+  ],
+  "court_directions": [
+    {
+      "direction_id": "REDDY-H03-D01",
+      "hearing_id": "REDDY-H03",
+      "text": "Prosecution directed to produce certified copy of Bank Statement — Account Ex. D-7.",
+      "issue_tags": ["certified-copy-pending"]
+    },
+    {
+      "direction_id": "REDDY-H08-D01",
+      "hearing_id": "REDDY-H08",
+      "text": "Prosecution again directed to submit certified copy of Bank Statement — Account Ex. D-7.",
+      "issue_tags": ["certified-copy-pending"]
+    },
+    {
+      "direction_id": "REDDY-H08-D02",
+      "hearing_id": "REDDY-H08",
+      "text": "Prosecution directed to file mandatory electronic evidence certificate for electronic logs.",
+      "issue_tags": ["electronic-evidence-certificate"]
+    },
+    {
+      "direction_id": "REDDY-H11-D01",
+      "hearing_id": "REDDY-H11",
+      "text": "Prosecution directed to complete full submission of Bank Statement — Account Ex. D-7.",
+      "issue_tags": ["certified-copy-pending"]
+    }
+  ],
+  "adjournments": [
+    {
+      "adjournment_id": "REDDY-H04-ADJ01",
+      "hearing_id": "REDDY-H04",
+      "reason": "Prosecution sought time to obtain certified bank statement",
+      "requested_by": "prosecution"
+    },
+    {
+      "adjournment_id": "REDDY-H05-ADJ01",
+      "hearing_id": "REDDY-H05",
+      "reason": "Prosecution witness PW-2 absent due to medical leave",
+      "requested_by": "prosecution"
+    },
+    {
+      "adjournment_id": "REDDY-H06-ADJ01",
+      "hearing_id": "REDDY-H06",
+      "reason": "PW-2 absent again; summons re-issued",
+      "requested_by": "court"
+    },
+    {
+      "adjournment_id": "REDDY-H09-ADJ01",
+      "hearing_id": "REDDY-H09",
+      "reason": "Court board overloaded; time elapsed",
+      "requested_by": "court"
+    },
+    {
+      "adjournment_id": "REDDY-H13-ADJ01",
+      "hearing_id": "REDDY-H13",
+      "reason": "Senior defence counsel engaged in High Court",
+      "requested_by": "defence"
+    }
+  ],
+  "documents": [
+    {
+      "document_id": "REDDY-H03-DOC01",
+      "hearing_id": "REDDY-H03",
+      "name": "Bank Statement — Account Ex. D-7",
+      "status_kind": "requested_by_court",
+      "requested_by_submitted_by": "court",
+      "status": "pending",
+      "resolved_hearing_id": null
+    },
+    {
+      "document_id": "REDDY-H10-DOC01",
+      "hearing_id": "REDDY-H10",
+      "name": "Electronic Evidence Certificate",
+      "status_kind": "submitted",
+      "requested_by_submitted_by": "prosecution",
+      "status": "submitted",
+      "resolved_hearing_id": "REDDY-H10"
+    },
+    {
+      "document_id": "REDDY-H11-DOC01",
+      "hearing_id": "REDDY-H11",
+      "name": "Bank Statement — Account Ex. D-7 (Partial Batch)",
+      "status_kind": "submitted",
+      "requested_by_submitted_by": "prosecution",
+      "status": "partial",
+      "resolved_hearing_id": null
+    }
+  ],
+  "action_items": [
+    {
+      "action_id": "REDDY-H08-ACT01",
+      "hearing_id": "REDDY-H08",
+      "description": "Update client on outcome of certificate objection",
+      "owner": "Advocate V. K. Gupta",
+      "status": "open",
+      "due_date": "2025-07-22",
+      "resolved_hearing_id": "REDDY-H10"
+    },
+    {
+      "action_id": "REDDY-H14-ACT01",
+      "hearing_id": "REDDY-H14",
+      "description": "Prepare cross-examination points for remaining testimony of PW-3",
+      "owner": "Advocate V. K. Gupta",
+      "status": "open",
+      "due_date": "2026-09-29",
+      "resolved_hearing_id": null
+    }
+  ],
+  "outcomes": [
+    {
+      "outcome_id": "REDDY-H01-OUT01",
+      "hearing_id": "REDDY-H01",
+      "text": "Copies furnished to defence; posted for charge framing."
+    },
+    {
+      "outcome_id": "REDDY-H02-OUT01",
+      "hearing_id": "REDDY-H02",
+      "text": "Charges framed; posted for prosecution evidence."
+    },
+    {
+      "outcome_id": "REDDY-H03-OUT01",
+      "hearing_id": "REDDY-H03",
+      "text": "Prosecution directed to produce certified bank statement."
+    },
+    {
+      "outcome_id": "REDDY-H04-OUT01",
+      "hearing_id": "REDDY-H04",
+      "text": "Adjourned at prosecution request for bank statement."
+    },
+    {
+      "outcome_id": "REDDY-H05-OUT01",
+      "hearing_id": "REDDY-H05",
+      "text": "PW-2 absent; adjourned."
+    },
+    {
+      "outcome_id": "REDDY-H06-OUT01",
+      "hearing_id": "REDDY-H06",
+      "text": "Summons re-issued to PW-2."
+    },
+    {
+      "outcome_id": "REDDY-H07-OUT01",
+      "hearing_id": "REDDY-H07",
+      "text": "PW-2 examined and discharged."
+    },
+    {
+      "outcome_id": "REDDY-H08-OUT01",
+      "hearing_id": "REDDY-H08",
+      "text": "Objection noted; direction issued for electronic evidence certificate and bank records."
+    },
+    {
+      "outcome_id": "REDDY-H09-OUT01",
+      "hearing_id": "REDDY-H09",
+      "text": "Adjourned due to lack of time."
+    },
+    {
+      "outcome_id": "REDDY-H10-OUT01",
+      "hearing_id": "REDDY-H10",
+      "text": "Electronic certificate filed; PW-3 examination deferred due to non-availability of documents."
+    },
+    {
+      "outcome_id": "REDDY-H11-OUT01",
+      "hearing_id": "REDDY-H11",
+      "text": "Partial bank records taken on file; full certified copy pending."
+    },
+    {
+      "outcome_id": "REDDY-H12-OUT01",
+      "hearing_id": "REDDY-H12",
+      "text": "PW-3 chief examination completed."
+    },
+    {
+      "outcome_id": "REDDY-H13-OUT01",
+      "hearing_id": "REDDY-H13",
+      "text": "Adjourned at defence request."
+    },
+    {
+      "outcome_id": "REDDY-H14-OUT01",
+      "hearing_id": "REDDY-H14",
+      "text": "PW-3 cross-examination partly completed; remaining cross-examination deferred to next date."
+    }
+  ]
+}
