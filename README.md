@@ -136,6 +136,8 @@ flowchart LR
     S --> K2[Retain hearing]
 ```
 
+<div align="center"><img src="docs/screens/log.png" width="900" alt="Understanding updated after logging a hearing"></div>
+
 The old fact isn't erased. It's **superseded** by a newer, dated memory ("as of H15, X is now Y; this supersedes Z recorded at H7"), which is how a lawyer treats a record. The sample note on the Reddy case catches four changes: the amount, the bank statement moving from pending to produced, PW-3's cross concluding, and the passport petition's new timeline.
 
 <table>
