@@ -468,7 +468,7 @@ def health():
         "hindsight": {"ok": ok, "bank": memory.bank, "error": None if ok else memory.last_error,
                       "stats": memory.stats() if ok else None},
         "llm": {"configured": llm.configured(), "model": llm.LLM_MODEL, "fallback": llm.LLM_FALLBACK_MODEL,
-                "last_error": llm.last_error},
+                "last_error": llm.last_error, **llm.key_status()},
         "queued_retains": pending,
         "today": diary.today.isoformat(),
     }

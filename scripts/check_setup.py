@@ -50,12 +50,15 @@ def main():
         print(f"{BAD} LLM_API_KEY is empty")
         failures += 1
     else:
-        try:
-            reply = llm.chat("Reply with the single word: ready", "ping", max_tokens=50)
-            print(f"{OK} {llm.last_model_used} answered: {reply[:40]!r}")
-        except llm.LLMUnavailable as exc:
-            print(f"{BAD} {exc}")
-            failures += 1
+        for i, client in enumerate(llm._clients, start=1):
+            try:
+                client.chat.completions.create(model=LLM_MODEL, messages=[{"role": "user", "content": "ping"}], max_tokens=20)
+                print(f"{OK} key {i} answers on {LLM_MODEL}")
+            except Exception as exc:  # report every key, keep going
+                print(f"{BAD} key {i}: {type(exc).__name__} {str(exc)[:120]}")
+                failures += 1
+        if len(llm._clients) > 1:
+            print(f"  {len(llm._clients)} keys will rotate, sharing the load")
 
     print("\nAll good. Start the app: python -m uvicorn app.main:app --port 8000\n" if not failures else
           f"\n{failures} problem(s). The app still runs in degraded mode, but fix these for the full demo.\n")
