@@ -283,7 +283,7 @@ function patternCard(p, facts, caseId) {
       <div class="big">${p.adjourned_matters}<small>/${p.total_matters}</small></div>
       <div class="what">of <b>${esc(p.counsel)}</b>'s last ${p.total_matters} other matters before ${esc(p.judge)} included an adjournment request${ground ? `, most often on ${esc(ground)}` : ""}.</div>
       <div class="dots">${p.matters.map((m) => `<span class="pd ${m.adjourned ? "hit" : ""}" title="${esc(m.title)}"><i></i>${esc(m.title.replace(/^State vs\. /, ""))}</span>`).join("")}</div>
-      <div class="foot">In this case: ${p.in_this_case.length ? p.in_this_case.map((h) => `H${h.no} (${h.ground})`).join(", ") : "none so far"}. Counted only from hearings recalled from memory ${fids.slice(0, 6).map((f) => citeChip(f, facts, caseId)).join("")}</div>
+      <div class="foot">In this case: ${p.in_this_case.length ? p.in_this_case.map((h) => `H${h.no} (${h.ground})`).join(", ") : "none so far"}. Counted only from hearings recalled from memory ${[...new Map(fids.map((f) => [facts.find((x) => x.fid === f).source.hearing_id, f])).values()].slice(0, 6).map((f) => citeChip(f, facts, caseId)).join("")}</div>
     </div>`;
 }
 
