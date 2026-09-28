@@ -66,6 +66,7 @@ document status, a party's stand, a client's instruction, the judge's direction.
 Do not report things that are merely new. Only real changes to something previously recorded.
 Check every rupee amount in the new note against amounts in memory: if the new note gives a different figure for the
 same payment, that is a change even when the note itself mentions the old figure. Never put fact ids inside "before" or "now".
+Copy figures, dates and names into "before" exactly as they appear in the earlier fact; never round or retype them.
 
 Return JSON only:
 {"changes": [{"topic": "short label", "before": "what memory said", "before_cite": "F3", "now": "what the new note says", "kind": "correction" | "update" | "contradiction"}]}
