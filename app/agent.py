@@ -49,8 +49,8 @@ def _recall_many(queries, as_of=None):
     facts, source = [], "hindsight"
     try:
         for f, q in zip(futures, queries):
-            for fact in f.result():
-                fact["lane"] = q["lane"]
+            for rank, fact in enumerate(f.result()):
+                fact["lane"], fact["rank"] = q["lane"], rank
                 facts.append(fact)
     except MemoryUnavailable:
         source = "offline"
@@ -58,7 +58,7 @@ def _recall_many(queries, as_of=None):
         for q in queries:
             for r in diary.keyword_recall(q["query"], case_id=q.get("case_id"), judge=q.get("judge"),
                                           counsel=q.get("counsel"), limit=q.get("limit", 10)):
-                r["lane"] = q["lane"]
+                r["lane"], r["rank"] = q["lane"], len(facts)
                 facts.append(r)
 
     seen, unique = set(), []
@@ -81,19 +81,14 @@ def _recall_many(queries, as_of=None):
 
 def _select(facts, per_lane=None):
     """Pick facts for the prompt within a token budget (Groq's free tier allows ~8k tokens a minute).
-    Case facts are kept in hearing order so early facts (e.g. the amount in the charge) are not crowded out."""
-    per_lane = per_lane or {"case": 42, "counsel": 14, "judge": 12, "ask": 30, "learned": 10}
+    Within each lane, keep Hindsight's own relevance ranking; then present them in hearing order."""
+    per_lane = per_lane or {"case": 45, "counsel": 14, "judge": 12, "ask": 30, "learned": 10}
     chosen = []
     for lane, cap in per_lane.items():
-        lane_facts = [f for f in facts if f.get("lane") == lane]
-        obs = [f for f in lane_facts if f["type"] == "observation"][: max(3, cap // 4)]
-        rest = [f for f in lane_facts if f["type"] != "observation"]  # already newest first
-        room = cap - len(obs)
-        recent, early = rest[: room * 2 // 3], rest[room * 2 // 3:][-(room - room * 2 // 3):] if room else []
-        picked = recent + [f for f in early if f not in recent]
-        picked.sort(key=lambda f: (f["source"]["no"] if f.get("source") else 0))
-        chosen += obs + picked
+        lane_facts = sorted((f for f in facts if f.get("lane") == lane), key=lambda f: f.get("rank", 0))
+        chosen += lane_facts[:cap]
     chosen += [f for f in facts if f.get("lane") not in per_lane][:10]
+    chosen.sort(key=lambda f: (f["source"]["case_id"], f["source"]["no"]) if f.get("source") else ("", 0))
     return chosen
 
 
@@ -339,20 +334,26 @@ def _structure(note, case):
 
 
 def _detect_changes(note, case_id):
+    title = diary.cases[case_id]["title"]
     facts, source = _recall_many([
         {"lane": "case", "query": note[:400], "tags": [f"case:{case_id}"], "budget": "high", "case_id": case_id, "limit": 20},
+        # Contradictions usually hide in figures and statuses, which a note-shaped query can miss.
+        {"lane": "case", "query": f"Amounts in rupees, dates, witness status and document status recorded in {title}",
+         "tags": [f"case:{case_id}"], "case_id": case_id, "limit": 12},
     ])
     if not facts:
         return [], facts
     try:
-        out = llm.chat(prompts.CONFLICT_SYSTEM, f"NEW NOTE:\n{note}\n\nEARLIER MEMORY:\n{_facts_block(facts, 30)}",
-                       json_mode=True, max_tokens=1000)
+        out = llm.chat(prompts.CONFLICT_SYSTEM, f"NEW NOTE:\n{note}\n\nEARLIER MEMORY:\n{_facts_block(facts, 60)}",
+                       json_mode=True, max_tokens=2500, reasoning="medium")
     except llm.LLMUnavailable:
         return [], facts
     by_id = {f["fid"]: f for f in facts}
     changes = []
     for c in (out.get("changes") or [])[:5]:
         f = by_id.get(c.get("before_cite"))
+        for k in ("before", "now", "topic"):
+            c[k] = re.sub(r"\s*\(?(?:as per |per )?F\d+\)?", "", str(c.get(k) or "")).strip()
         changes.append({**c, "before_source": f["source"] if f else None})
     return changes, facts
 
