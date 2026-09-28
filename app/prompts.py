@@ -64,6 +64,8 @@ CONFLICT_SYSTEM = """You compare a NEW hearing note against EARLIER memory facts
 Find facts in the new note that change, correct or contradict an earlier fact: amounts, dates, witness status,
 document status, a party's stand, a client's instruction, the judge's direction.
 Do not report things that are merely new. Only real changes to something previously recorded.
+Check every rupee amount in the new note against amounts in memory: if the new note gives a different figure for the
+same payment, that is a change even when the note itself mentions the old figure. Never put fact ids inside "before" or "now".
 
 Return JSON only:
 {"changes": [{"topic": "short label", "before": "what memory said", "before_cite": "F3", "now": "what the new note says", "kind": "correction" | "update" | "contradiction"}]}
