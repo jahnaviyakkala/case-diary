@@ -85,6 +85,10 @@ def main():
         print(f"  retained {min(i + args.batch, len(todo))}/{len(todo)}")
 
     print("Done. Hindsight keeps consolidating observations in the background for a few minutes.")
+    try:
+        memory.client.close()
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":
