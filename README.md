@@ -50,6 +50,8 @@ The agent recalls the case's 14 hearings from Hindsight, looks across the advoca
 
 Flip the **Memory** switch off and the same request produces what any chatbot would produce: generic advice about cross-examination.
 
+<div align="center"><img src="docs/screens/brief.png" width="880" alt="A memory-backed hearing brief with citations"></div>
+
 <div align="center"><img src="docs/screens/timeline.png" width="880" alt="Hearing timeline"></div>
 
 ## How Hindsight memory is used
