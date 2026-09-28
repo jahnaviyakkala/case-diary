@@ -64,8 +64,11 @@ class Memory:
             self.last_error = None
             return result
         except Exception as exc:  # network errors, auth errors, 5xx from the server
-            self.last_error = f"{type(exc).__name__}: {str(exc)[:200]}"
-            self._down_until = time.time() + 20
+            status = getattr(exc, "status", None)
+            self.last_error = f"{type(exc).__name__}: {str(exc).splitlines()[0][:200]}"
+            # A 4xx (e.g. bank not created yet) means the server is up; only trip the breaker on outages.
+            if not (isinstance(status, int) and 400 <= status < 500):
+                self._down_until = time.time() + 20
             log.warning("Hindsight call failed: %s", self.last_error)
             raise MemoryUnavailable(self.last_error) from exc
 

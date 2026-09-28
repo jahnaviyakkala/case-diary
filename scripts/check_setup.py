@@ -28,17 +28,19 @@ def main():
     if memory.healthy():
         print(f"{OK} Hindsight is reachable")
         stats = memory.stats()
-        if stats is None or sum(stats.values()) == 0:
+        if stats is None and ("404" in (memory.last_error or "") or "NotFound" in (memory.last_error or "")):
+            print(f"{WARN} bank '{memory.bank}' does not exist yet (normal before seeding). Run: python scripts/seed_memory.py")
+        elif stats is None or sum(stats.values()) == 0:
             print(f"{WARN} bank '{memory.bank}' is empty. Run: python scripts/seed_memory.py")
         else:
             print(f"{OK} bank '{memory.bank}': {stats['world']} facts, {stats['experience']} experiences, "
                   f"{stats['observation']} learned observations")
-        try:
-            memory.recall("adjournment", budget="low", max_tokens=200)
-            print(f"{OK} recall works")
-        except MemoryUnavailable as exc:
-            print(f"{BAD} recall failed: {exc}")
-            failures += 1
+            try:
+                memory.recall("adjournment", budget="low", max_tokens=200)
+                print(f"{OK} recall works")
+            except MemoryUnavailable as exc:
+                print(f"{BAD} recall failed: {exc}")
+                failures += 1
     else:
         print(f"{BAD} Hindsight unreachable: {memory.last_error}")
         failures += 1
@@ -57,6 +59,10 @@ def main():
 
     print("\nAll good. Start the app: python -m uvicorn app.main:app --port 8000\n" if not failures else
           f"\n{failures} problem(s). The app still runs in degraded mode, but fix these for the full demo.\n")
+    try:
+        memory.client.close()
+    except Exception:
+        pass
     sys.exit(1 if failures else 0)
 
 
