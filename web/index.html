@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Diary</title>
+  <meta name="description" content="Hearing preparation for litigation advocates, backed by long-term memory.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237A1F1F'/><path d='M10 8h9a4 4 0 0 1 4 4v12H13a3 3 0 0 1-3-3z' fill='none' stroke='%23F6F1E7' stroke-width='2'/><path d='M14 13h5M14 17h5' stroke='%23F6F1E7' stroke-width='2' stroke-linecap='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/">
+      <span class="seal"><i data-lucide="book-marked"></i></span>
+      <span class="brand-text">Case Diary</span>
+    </a>
+    <button class="command" id="command-open" type="button">
+      <i data-lucide="search"></i>
+      <span>Prep me for tomorrow's hearing in Reddy vs. State…</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+    <div class="top-right">
+      <div class="status" id="status" title="Service status">
+        <span class="dot" data-k="hindsight"></span><span class="status-label">Hindsight</span>
+        <span class="dot" data-k="llm"></span><span class="status-label">LLM</span>
+      </div>
+      <label class="memswitch" title="Toggle long-term memory">
+        <input type="checkbox" id="memory-toggle" checked>
+        <span class="track"><span class="knob"></span></span>
+        <span class="memswitch-label">Memory <b id="memory-state">on</b></span>
+      </label>
+      <button class="icon-btn" id="theme-toggle" type="button" title="Switch theme"><i data-lucide="moon"></i></button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="today" id="today"></div>
+      <nav id="docket"></nav>
+      <a class="side-link" href="#/people"><i data-lucide="landmark"></i> Bench &amp; Bar</a>
+      <a class="side-link" href="#/all"><i data-lucide="library"></i> All matters</a>
+    </aside>
+    <main id="main" tabindex="-1"></main>
+  </div>
+
+  <div class="palette" id="palette" hidden>
+    <div class="palette-card" role="dialog" aria-label="Ask the diary">
+      <form id="palette-form">
+        <i data-lucide="sparkles"></i>
+        <input id="palette-input" autocomplete="off" placeholder="Prep me for Reddy · What does Justice Varma respond to in bail? · Has Chary adjourned before?">
+      </form>
+      <div class="palette-hints">
+        <button data-q="Prep me for tomorrow's hearing in Reddy vs. State">Prep me for tomorrow's hearing in Reddy vs. State</button>
+        <button data-q="Which bail arguments have worked before Justice Varma?">Which bail arguments have worked before Justice Varma?</button>
+        <button data-q="How often has APP Narasimha Chary sought adjournments, and on what grounds?">How often has APP Chary sought adjournments?</button>
+        <button data-q="What have I promised Mr. Reddy that is still open?">What have I promised Mr. Reddy that is still open?</button>
+      </div>
+      <div class="palette-answer" id="palette-answer"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
