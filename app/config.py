@@ -21,6 +21,8 @@ HINDSIGHT_BANK = _env("HINDSIGHT_BANK", "case-diary")
 # provider works by changing LLM_BASE_URL.
 LLM_BASE_URL = _env("LLM_BASE_URL", "https://api.groq.com/openai/v1")
 LLM_API_KEY = _env("LLM_API_KEY") or _env("GROQ_API_KEY")
+# Up to three keys; requests rotate across them so their per-minute limits add up.
+LLM_API_KEYS = list(dict.fromkeys(k for k in (LLM_API_KEY, _env("LLM_API_KEY_2"), _env("LLM_API_KEY_3")) if k))
 LLM_MODEL = _env("LLM_MODEL", "openai/gpt-oss-120b")
 LLM_FALLBACK_MODEL = _env("LLM_FALLBACK_MODEL", "openai/gpt-oss-20b")
 
