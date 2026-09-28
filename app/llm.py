@@ -41,8 +41,12 @@ def _extract_json(text):
         raise
 
 
-def _complete(model, messages, json_mode, max_tokens):
+def _complete(model, messages, json_mode, max_tokens, reasoning="low"):
     kwargs = {"model": model, "messages": messages, "temperature": 0.2, "max_tokens": max_tokens}
+    if "gpt-oss" in model:
+        # gpt-oss spends completion tokens on hidden reasoning; without this a long prompt
+        # can use the whole budget thinking and return an empty answer.
+        kwargs["reasoning_effort"] = reasoning
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
     try:
@@ -55,7 +59,7 @@ def _complete(model, messages, json_mode, max_tokens):
     return resp.choices[0].message.content or ""
 
 
-def chat(system, user, *, json_mode=False, max_tokens=2500):
+def chat(system, user, *, json_mode=False, max_tokens=2500, reasoning="low"):
     """Return text (or a dict when json_mode) from the first model that answers sensibly."""
     global last_model_used, last_error
     if not configured():
@@ -66,7 +70,7 @@ def chat(system, user, *, json_mode=False, max_tokens=2500):
     for model in models:
         for attempt in range(2):
             try:
-                text = _complete(model, messages, json_mode, max_tokens)
+                text = _complete(model, messages, json_mode, max_tokens, reasoning)
                 result = _extract_json(text) if json_mode else re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
                 if not result:
                     raise ValueError("empty response")
@@ -80,6 +84,7 @@ def chat(system, user, *, json_mode=False, max_tokens=2500):
                 time.sleep(3)
             except (json.JSONDecodeError, ValueError) as exc:
                 last_error = f"{model} returned unparseable output ({exc})"
+                log.warning(last_error)
                 messages = messages[:2] + [{"role": "user", "content": user + "\n\nReturn ONLY valid JSON."}]
             except (APIConnectionError, APIStatusError) as exc:
                 last_error = f"{model}: {type(exc).__name__} {str(exc)[:160]}"
