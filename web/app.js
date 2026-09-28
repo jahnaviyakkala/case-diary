@@ -493,7 +493,7 @@ async function showProfile(kind, id) {
     el.innerHTML = `<div class="profile">
       <div class="court-line">${esc(r.person.designation || r.person.role)}</div>
       <h2 class="headline" style="margin-top:6px">${esc(r.person.name)}</h2>
-      <div class="stats"><div><b>${r.stats.cases}</b><span>matters</span></div><div><b>${r.stats.hearings}</b><span>hearings</span></div><div><b>${r.stats.adjournments_by_opposite}</b><span>adjournments sought by the other side</span></div></div>
+      <div class="stats"><div><b>${r.stats.cases}</b><span>matters</span></div><div><b>${r.stats.hearings}</b><span>hearings</span></div><div><b>${r.stats.adjournments_by_opposite}</b><span>${r.person.kind === "counsel" ? "adjournments they sought" : "adjournments sought by opposite counsel"}</span></div></div>
       <p class="standing">${esc(r.profile.summary)}</p>
       <ul class="lined">${r.profile.points.map((pt) => `<li><span class="txt">${esc(pt.text)}${cites(pt.cites, r.facts, null)}</span></li>`).join("")}</ul>
       ${r.memory_source === "offline" ? `<div class="banner warn" style="margin-top:16px"><i data-lucide="cloud-off"></i><div>Hindsight offline: built from the local diary.</div></div>` : ""}
