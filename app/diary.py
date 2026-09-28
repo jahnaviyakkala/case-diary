@@ -211,14 +211,15 @@ class Diary:
                 continue
             if counsel and h["counsel"] != counsel:
                 continue
-            text = self.render(h)
-            low = text.lower()
-            score = sum(low.count(w) for w in words) + (0.001 * h["no"])
-            if score > 0.01 or case_id:
-                results.append({"text": text, "date": h["date"], "hearing_id": h["id"], "score": score,
-                                "type": "diary", "case_id": h["case_id"]})
+            # Split the note into sentence-sized facts, like Hindsight's extracted facts.
+            for line in self.render(h).split("\n")[2:]:
+                low = line.lower()
+                score = sum(low.count(w) for w in words) + 0.002 * h["no"]
+                if score > 0.01 or case_id:
+                    results.append({"text": line, "date": h["date"], "hearing_id": h["id"], "score": score,
+                                    "type": "diary", "case_id": h["case_id"]})
         results.sort(key=lambda r: -r["score"])
-        return results[:limit]
+        return results[: limit * 2]
 
 
 diary = Diary()

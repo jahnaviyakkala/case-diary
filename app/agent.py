@@ -151,7 +151,8 @@ def _clean_cites(obj, valid):
 def _template_brief(case, facts, pattern):
     """Used when the LLM is unavailable: facts laid out under the same headings, no prose generation."""
     def pick(pred, n=4):
-        return [{"text": f["text"], "cites": [f["fid"]]} for f in facts if pred(f["text"].lower())][:n]
+        strip = re.compile(r"^(Promise to client|The judge asked / directed|Lesson noted by [^:]+):\s*")
+        return [{"text": strip.sub("", f["text"]), "cites": [f["fid"]]} for f in facts if pred(f["text"].lower())][:n]
 
     own = [f for f in facts if f.get("source") and f["source"]["case_id"] == case["id"]]
     last = own[0] if own else None
@@ -163,7 +164,7 @@ def _template_brief(case, facts, pattern):
         "watch_outs": [],
         "preempt": None,
         "promises": pick(lambda t: "promise" in t),
-        "carry": pick(lambda t: "document due" in t or "certified" in t),
+        "carry": pick(lambda t: t.startswith("document due")),
         "changed": [],
         "gaps": ["The language model was unavailable, so this brief lists recalled facts without synthesis."],
     }
