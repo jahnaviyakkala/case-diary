@@ -122,7 +122,8 @@ class Memory:
             when = r.occurred_start or r.mentioned_at
             facts.append({
                 "id": r.id,
-                "text": r.text,
+                # Hindsight appends "| When: ... | Involving: ..." to fact text; the date is shown separately.
+                "text": (r.text or "").split(" | When:")[0].strip(),
                 "type": r.type or "world",
                 "date": str(when)[:10] if when else None,
                 "hearing_id": meta.get("hearing_id") or r.document_id,
