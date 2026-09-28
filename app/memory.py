@@ -52,7 +52,7 @@ class Memory:
     @property
     def client(self):
         if self._client is None:
-            self._client = Hindsight(base_url=HINDSIGHT_URL, api_key=HINDSIGHT_API_KEY, timeout=90.0, max_attempts=2)
+            self._client = Hindsight(base_url=HINDSIGHT_URL, api_key=HINDSIGHT_API_KEY, timeout=180.0, max_attempts=2)
         return self._client
 
     def _call(self, fn, *args, **kwargs):

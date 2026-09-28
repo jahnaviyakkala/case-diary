@@ -1,15 +1,19 @@
+# Local Hindsight (only needed if you are not using Hindsight Cloud).
+#   docker compose up -d
+# API on :8888, Hindsight's own control-plane UI on :9999.
 services:
   hindsight:
     image: ghcr.io/vectorize-io/hindsight:latest
     container_name: case-diary-hindsight
     restart: unless-stopped
+    shm_size: 1g
     ports:
       - "8888:8888"
       - "9999:9999"
     environment:
-      - HINDSIGHT_API_LLM_PROVIDER=${HINDSIGHT_API_LLM_PROVIDER:-gemini}
-      - HINDSIGHT_API_LLM_API_KEY=${HINDSIGHT_API_LLM_API_KEY:-}
-      - HINDSIGHT_API_LLM_MODEL=${HINDSIGHT_API_LLM_MODEL:-gemini-2.0-flash}
+      - HINDSIGHT_API_LLM_PROVIDER=${HINDSIGHT_API_LLM_PROVIDER:-groq}
+      - HINDSIGHT_API_LLM_API_KEY=${HINDSIGHT_API_LLM_API_KEY}
+      - HINDSIGHT_API_LLM_MODEL=${HINDSIGHT_API_LLM_MODEL:-openai/gpt-oss-20b}
     volumes:
       - hindsight_data:/home/hindsight/.pg0
 
