@@ -22,7 +22,7 @@ HINDSIGHT_BANK = _env("HINDSIGHT_BANK", "case-diary")
 LLM_BASE_URL = _env("LLM_BASE_URL", "https://api.groq.com/openai/v1")
 LLM_API_KEY = _env("LLM_API_KEY") or _env("GROQ_API_KEY")
 LLM_MODEL = _env("LLM_MODEL", "openai/gpt-oss-120b")
-LLM_FALLBACK_MODEL = _env("LLM_FALLBACK_MODEL", "qwen/qwen3-32b")
+LLM_FALLBACK_MODEL = _env("LLM_FALLBACK_MODEL", "openai/gpt-oss-20b")
 
 DATA_FILE = ROOT / "data" / "diary.json"
 RUNTIME_DIR = ROOT / "data" / "runtime"

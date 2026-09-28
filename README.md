@@ -87,7 +87,7 @@ A tool a lawyer relies on at 11 pm cannot show a stack trace. Every dependency h
 |---|---|---|
 | **Hindsight unreachable** | The brief still appears, with an amber *"answered from the local diary"* banner. | Recall falls back to keyword search over the diary, split into sentence-level facts. A 20-second circuit breaker stops every request from waiting on a timeout. |
 | **Hindsight down while logging a hearing** | *"Saved · 2 queued, will sync automatically."* | The note is saved locally and queued in `data/runtime/retain_queue.json`. The health check flushes the queue when memory returns. |
-| **LLM rate-limited (Groq 429)** | A short delay. | Backoff and retry, then the fallback model (`qwen/qwen3-32b`). |
+| **LLM rate-limited (Groq 429)** | A short delay. | Backoff and retry, then a fallback model with its own quota (`openai/gpt-oss-20b`). |
 | **LLM returns broken JSON or `<think>` noise** | Nothing visible. | Tolerant parsing, then one re-ask for strict JSON. |
 | **LLM completely unavailable** | The brief shows recalled facts under the same headings, with a banner. | A template composer that invents nothing. |
 | **LLM cites a fact that does not exist** | The claim is dropped. | Citations are validated against the recalled fact ids before rendering. |

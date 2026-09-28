@@ -62,7 +62,8 @@ def chat(system, user, *, json_mode=False, max_tokens=2500):
         last_error = "LLM_API_KEY is not set"
         raise LLMUnavailable(last_error)
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    for model in [LLM_MODEL, LLM_FALLBACK_MODEL]:
+    models = list(dict.fromkeys([LLM_MODEL, LLM_FALLBACK_MODEL, "openai/gpt-oss-20b"]))
+    for model in models:
         for attempt in range(2):
             try:
                 text = _complete(model, messages, json_mode, max_tokens)
@@ -73,9 +74,10 @@ def chat(system, user, *, json_mode=False, max_tokens=2500):
                 return result
             except RateLimitError as exc:
                 last_error = f"rate limited on {model}"
-                wait = 2 + attempt * 3
-                log.warning("%s; retrying in %ss", last_error, wait)
-                time.sleep(wait)
+                if attempt == 1:
+                    break  # the next model has its own quota; switching beats waiting out the minute
+                log.warning("%s; retrying in 3s", last_error)
+                time.sleep(3)
             except (json.JSONDecodeError, ValueError) as exc:
                 last_error = f"{model} returned unparseable output ({exc})"
                 messages = messages[:2] + [{"role": "user", "content": user + "\n\nReturn ONLY valid JSON."}]
