@@ -208,10 +208,11 @@ function animateSteps(el) {
   return () => clearTimeout(el._t);
 }
 
-async function fetchBrief(id, memory, asOf) {
+async function fetchBrief(id, memory, asOf, fresh) {
   const key = `${id}|${memory}|${asOf || ""}`;
+  if (fresh) state.briefs.delete(key);
   if (!state.briefs.has(key)) {
-    const p = api(`/api/cases/${id}/brief?memory=${memory}${asOf ? `&as_of=${asOf}` : ""}`);
+    const p = api(`/api/cases/${id}/brief?memory=${memory}${asOf ? `&as_of=${asOf}` : ""}${fresh ? "&fresh=true" : ""}`);
     state.briefs.set(key, p);
     p.catch(() => state.briefs.delete(key));
   }
@@ -228,8 +229,8 @@ async function renderBrief(data, opts = {}) {
   const stop = animateSteps(pane);
   let b, generic;
   try {
-    if (compare) [b, generic] = await Promise.all([fetchBrief(id, true, asOf), fetchBrief(id, false)]);
-    else b = await fetchBrief(id, state.memory, state.memory ? asOf : null);
+    if (compare) [b, generic] = await Promise.all([fetchBrief(id, true, asOf, opts.fresh), fetchBrief(id, false, null, opts.fresh)]);
+    else b = await fetchBrief(id, state.memory, state.memory ? asOf : null, opts.fresh);
   } catch (e) {
     stop();
     pane.innerHTML = `<div class="banner off"><i data-lucide="triangle-alert"></i><div>Could not prepare the brief: ${esc(e.message)}. The hearing record is still available under Hearings.</div></div>`;
@@ -356,15 +357,12 @@ function bindBrief(pane, data, b, opts) {
     localStorage.setItem(cb.dataset.k, cb.checked ? "1" : "0");
     cb.closest("li").classList.toggle("done", cb.checked);
   }));
-  $("#cmp").onclick = () => { if (!state.memory) setMemory(true); renderBrief(data, { ...opts, compare: !opts.compare }); };
-  $("#regen").onclick = () => {
-    [...state.briefs.keys()].filter((k) => k.startsWith(data.case.id + "|")).forEach((k) => state.briefs.delete(k));
-    renderBrief(data, opts);
-  };
+  $("#cmp").onclick = () => { if (!state.memory) setMemory(true); renderBrief(data, { ...opts, fresh: false, compare: !opts.compare }); };
+  $("#regen").onclick = () => renderBrief(data, { ...opts, fresh: true });
   const depth = $("#depth");
   if (depth) {
     depth.oninput = () => ($("#depth-val").textContent = +depth.value === data.hearings.length ? `all ${data.hearings.length}` : `H${depth.value}`);
-    depth.onchange = () => renderBrief(data, { ...opts, asOf: +depth.value });
+    depth.onchange = () => renderBrief(data, { ...opts, fresh: false, asOf: +depth.value });
   }
 }
 

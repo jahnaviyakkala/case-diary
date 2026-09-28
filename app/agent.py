@@ -15,6 +15,7 @@ Each step degrades instead of failing:
 import json
 import logging
 import re
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime
 
@@ -78,12 +79,31 @@ def _recall_many(queries, as_of=None):
     return unique, source
 
 
-def _facts_block(facts, limit=60):
+def _select(facts, per_lane=None):
+    """Pick facts for the prompt within a token budget (Groq's free tier allows ~8k tokens a minute).
+    Case facts are kept in hearing order so early facts (e.g. the amount in the charge) are not crowded out."""
+    per_lane = per_lane or {"case": 42, "counsel": 14, "judge": 12, "ask": 30, "learned": 10}
+    chosen = []
+    for lane, cap in per_lane.items():
+        lane_facts = [f for f in facts if f.get("lane") == lane]
+        obs = [f for f in lane_facts if f["type"] == "observation"][: max(3, cap // 4)]
+        rest = [f for f in lane_facts if f["type"] != "observation"]  # already newest first
+        room = cap - len(obs)
+        recent, early = rest[: room * 2 // 3], rest[room * 2 // 3:][-(room - room * 2 // 3):] if room else []
+        picked = recent + [f for f in early if f not in recent]
+        picked.sort(key=lambda f: (f["source"]["no"] if f.get("source") else 0))
+        chosen += obs + picked
+    chosen += [f for f in facts if f.get("lane") not in per_lane][:10]
+    return chosen
+
+
+def _facts_block(facts, limit=90):
     lines = []
-    for f in facts[:limit]:
+    for f in _select(facts)[:limit]:
         src = f["source"]
         where = f"{src['title']}, hearing {src['no']}, {src['date']}" if src else (f.get("date") or "undated")
-        lines.append(f"[{f['fid']}] ({where}; {f['type']}) {f['text']}")
+        text = f["text"] if len(f["text"]) <= 260 else f["text"][:257] + "..."
+        lines.append(f"[{f['fid']}] ({where}; {f['type']}) {text}")
     return "\n".join(lines) or "(no facts recalled)"
 
 
@@ -176,7 +196,23 @@ def _template_brief(case, facts, pattern):
     return brief
 
 
-def brief(case_id, use_memory=True, as_of_no=None):
+_brief_cache = {}
+CACHE_SECONDS = 1800
+
+
+def brief(case_id, use_memory=True, as_of_no=None, force=False):
+    """Cached per (case, memory, depth, hearing count): a demo can flip views freely without
+    burning the LLM's per-minute token quota. Logging a hearing changes the key, so it never goes stale."""
+    key = (case_id, use_memory, as_of_no, len(diary.case_hearings(case_id)))
+    hit = _brief_cache.get(key)
+    if hit and not force and time.time() - hit[0] < CACHE_SECONDS and hit[1]["composer"] == "llm":
+        return hit[1]
+    result = _brief(case_id, use_memory, as_of_no)
+    _brief_cache[key] = (time.time(), result)
+    return result
+
+
+def _brief(case_id, use_memory, as_of_no):
     case = diary.case_view(case_id)
     header = {
         "title": case["title"], "case_no": case["case_no"], "court": case["court_name"], "judge": case["judge_name"],
@@ -220,7 +256,7 @@ def brief(case_id, use_memory=True, as_of_no=None):
     )
     composer = "llm"
     try:
-        result = llm.chat(prompts.BRIEF_SYSTEM, user, json_mode=True, max_tokens=3000)
+        result = llm.chat(prompts.BRIEF_SYSTEM, user, json_mode=True, max_tokens=2200)
         result = _clean_cites(result, {f["fid"] for f in facts})
     except llm.LLMUnavailable:
         composer = "template"

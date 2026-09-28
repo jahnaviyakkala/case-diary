@@ -54,9 +54,9 @@ def case_detail(case_id: str):
 
 
 @app.get("/api/cases/{case_id}/brief")
-def case_brief(case_id: str, memory: bool = True, as_of: int | None = None):
+def case_brief(case_id: str, memory: bool = True, as_of: int | None = None, fresh: bool = False):
     _case_or_404(case_id)
-    return agent.brief(case_id, use_memory=memory, as_of_no=as_of)
+    return agent.brief(case_id, use_memory=memory, as_of_no=as_of, force=fresh)
 
 
 class Ask(BaseModel):
