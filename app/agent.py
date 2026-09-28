@@ -146,14 +146,33 @@ def _counsel_pattern(case, facts):
 # Brief
 # --------------------------------------------------------------------------
 
+_INLINE = re.compile(r"\s*[\(\[]\s*(?:\[?F\d+\]?\s*[,;]?\s*)+[\)\]]|\s*\[F\d+\]")
+
+
+def _pull_inline(text):
+    """Models sometimes write '(F3, F7)' or '[F3]' into prose. Move those ids out of the text."""
+    ids = re.findall(r"F\d+", " ".join(m.group(0) for m in _INLINE.finditer(text or "")))
+    return _INLINE.sub("", text or "").strip(), ids
+
+
 def _clean_cites(obj, valid):
     """Drop citations the model invented; drop claims left with no valid citation."""
     def fix(item):
-        if isinstance(item, dict) and "cites" in item:
-            item["cites"] = [c for c in item.get("cites") or [] if c in valid]
+        if isinstance(item, dict):
+            extra = []
+            for k in ("text", "say", "before", "after", "what", "title"):
+                if isinstance(item.get(k), str):
+                    item[k], ids = _pull_inline(item[k])
+                    extra += ids
+            if "cites" in item or extra:
+                item["cites"] = list(dict.fromkeys(c for c in (item.get("cites") or []) + extra if c in valid))
         return item
 
-    for key in ("bench_expects", "watch_outs", "promises", "carry", "changed"):
+    for key in ("headline", "standing"):
+        if isinstance(obj.get(key), str):
+            obj[key] = _pull_inline(obj[key])[0]
+
+    for key in ("bench_expects", "watch_outs", "promises", "carry", "changed", "points"):
         items = [fix(x) for x in obj.get(key) or [] if isinstance(x, dict)]
         obj[key] = [x for x in items if x.get("cites")] if valid else items
     for key in ("last_time", "preempt"):
@@ -450,8 +469,9 @@ def profile(kind, pid):
     try:
         out = llm.chat(prompts.PROFILE_SYSTEM, f"Person: {person['name']} ({person.get('designation') or person.get('role')})\n\n"
                                                f"Memory facts:\n{_facts_block(facts, 40)}", json_mode=True, max_tokens=1200)
-        out = {"summary": out.get("summary", ""),
-               "points": [p for p in out.get("points") or [] if isinstance(p, dict)]}
+        valid = {f["fid"] for f in facts}
+        out = {"summary": _pull_inline(out.get("summary", ""))[0],
+               "points": _clean_cites({"points": [p for p in out.get("points") or [] if isinstance(p, dict)]}, valid)["points"]}
         composer = "llm"
     except llm.LLMUnavailable:
         composer = "template"
